@@ -1,21 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 export default function SignUp() {
   const [err, setErr] = useState(false);
   const navigate = useNavigate();
+  const { setCurrentUser } = useContext(AuthContext);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const displayName = e.target[0].value;
-    const group = e.target[1].value;
-    const password = e.target[2].value;
-    console.log(displayName);
-    console.log(group);
-    console.log(password);
+    const name = e.target[0].value;
+    const email = e.target[1].value;
+    const group = e.target[2].value;
+    const password = e.target[3].value;
+    const obj = { name, email, group, password };
     try {
-      //Create user
-      // const res = await createUserWithEmailAndPassword(auth, email, password);
-      //  navigate("/");
+      const res = await fetch("https://api.react-learning.ru/signup", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(obj),
+      });
+
+      const responce = await res.json();
+      setCurrentUser(responce);
+      if (res.ok) {
+        navigate("/");
+      }
     } catch (err) {
       setErr(true);
     }
@@ -27,7 +40,8 @@ export default function SignUp() {
         <span className="logo">DogStore</span>
         <span className="title">Регистрация</span>
         <form onSubmit={handleSubmit}>
-          <input type="text" placeholder="Логин" />
+          <input type="text" placeholder="Имя" />
+          <input type="email" placeholder="Email" />
           <input type="text" placeholder="Группа" />
           <input type="password" placeholder="Пароль" />
           <button>Зарегистрироваться</button>

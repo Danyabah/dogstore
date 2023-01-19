@@ -1,18 +1,19 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { AuthContext } from "./context/AuthContext";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import UserInfo from "./pages/UserInfo";
 
 function App() {
-  //TODO сделать контекст user и доставать его оттуда
-  const currentUser = useContext(AuthContext);
-  // const [currentUser, setCurrentUser] = useState(true);
-  console.log(currentUser);
+  const { currentUser } = useContext(AuthContext);
 
   const ProtectedRoute = ({ children }) => {
+    if (localStorage.getItem("token")) {
+      return children;
+    }
     if (!currentUser) {
       return <Navigate to={"/login"} />;
     }
@@ -33,6 +34,7 @@ function App() {
         />
         <Route path="register" element={<SignUp />} />
         <Route path="login" element={<SignIn />} />
+        <Route path="userinfo" element={<UserInfo />} />
         <Route />
       </Routes>
     </div>
