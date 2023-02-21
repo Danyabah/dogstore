@@ -5,7 +5,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import UserInfo from "./pages/UserInfo";
 import { useSelector } from "react-redux";
-import Cart from "./components/Cart";
+import Cart from "./pages/Cart";
 
 function App() {
   const token = useSelector((state) => state.user.token);

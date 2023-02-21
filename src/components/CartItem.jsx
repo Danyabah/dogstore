@@ -1,19 +1,51 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addItem,
+  decrement,
+  deleteItem,
+  selectCurrentItem,
+} from "../Redux/Slices/cartReducer";
 
-export default function CartItem() {
+export default function CartItem({
+  _id,
+  price,
+  pictures,
+  name,
+  available,
+  discount,
+  stock,
+  count,
+}) {
+  const currentItem = useSelector(selectCurrentItem(_id));
+  const dispatch = useDispatch();
+  function decrementItem(_id) {
+    dispatch(decrement({ _id }));
+  }
+
+  function tryDelete(_id) {
+    if (
+      window.confirm(
+        `Вы уверены что хотите удалить товар "${currentItem?.name}" из корзины?`
+      )
+    ) {
+      dispatch(deleteItem({ _id }));
+    }
+  }
+
   return (
     <div className="cart__item">
       <div className="cart__item-img">
-        <img className="pizza-block__image" src={""} alt="Pizza" />
+        <img className="" src={pictures} alt="Tovar" />
       </div>
       <div className="cart__item-info">
-        <h3>название</h3>
-        <p>тип.</p>
+        <h3>{name}</h3>
+        {discount ? <p>Скидка: {discount} % </p> : ""}
       </div>
       <div className="cart__item-count">
         <button
-          // disabled={count === 1}
-          onClick={() => false}
+          disabled={count === 1}
+          onClick={() => decrementItem(_id)}
           className="button button--outline button--circle cart__item-count-minus"
         >
           <svg
@@ -33,9 +65,10 @@ export default function CartItem() {
             />
           </svg>
         </button>
-        <b>{121}</b>
-        <div
-          // onClick={() => dispatch(addItem({ id }))}
+        <b>{count}</b>
+        <button
+          disabled={count === stock}
+          onClick={() => dispatch(addItem({ _id }))}
           className="button button--outline button--circle cart__item-count-plus"
         >
           <svg
@@ -54,15 +87,12 @@ export default function CartItem() {
               fill="#EB5A1E"
             />
           </svg>
-        </div>
+        </button>
       </div>
       <div className="cart__item-price">
-        <b>{123} ₽</b>
+        <b>{price} ₽</b>
       </div>
-      <div
-        // onClick={() => tryDelete(id)}
-        className="cart__item-remove"
-      >
+      <div onClick={() => tryDelete(_id)} className="cart__item-remove">
         <div className="button button--outline button--circle">
           <svg
             strokeWidth="10"

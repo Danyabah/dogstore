@@ -12,6 +12,7 @@ export default function Home() {
   const [search, setSearch] = useState("");
   const location = useLocation();
   const token = useSelector((state) => state.user.token);
+  const { totalPrice, totalCount } = useSelector((state) => state.cart);
 
   const getProducts = async () => {
     const res = await fetch("https://api.react-learning.ru/products", {
@@ -39,7 +40,6 @@ export default function Home() {
   // .filter((item) => {
   //   return item.title.toLowerCase().includes(search.toLowerCase());
   // })
-
   return (
     <>
       <div className="header">
@@ -56,7 +56,7 @@ export default function Home() {
             {location.pathname !== "/cart" && (
               <div className="header__cart">
                 <Link to="/cart" className="button button--cart">
-                  <span>1000 ₽</span>
+                  <span>{totalPrice.toLocaleString()} ₽</span>
                   <div className="button__delimiter"></div>
                   <svg
                     width="18"
@@ -87,7 +87,7 @@ export default function Home() {
                       strokeLinejoin="round"
                     />
                   </svg>
-                  <span>5</span>
+                  <span>{totalCount}</span>
                 </Link>
               </div>
             )}
