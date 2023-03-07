@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import getLSData from "../../Utils/getLSData";
+import getLSData from "../../utils/getLSData";
 
 const initialState = {
   token: getLSData() || "",

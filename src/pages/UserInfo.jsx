@@ -6,7 +6,7 @@ export default function UserInfo() {
     queryKey: ["userInfo"],
     queryFn: async () => {
       const res = await fetch(
-        "https://api.react-learning.ru/v2/gr-9/users/me",
+        "https://api.react-learning.ru/v2/9-gr/users/me",
         {
           method: "GET",
           headers: {

@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import calculatePriceAndCount from "../../Utils/calculatePriceAndCount";
+import calculatePriceAndCount from "../../utils/calculatePriceAndCount";
+import getLSCardData from "../../utils/getLSCardData";
 
 const initialState = {
-  token: "",
-  items: [],
-  totalPrice: 0,
-  totalCount: 0,
+  items: getLSCardData().items || [],
+  totalPrice: getLSCardData().totalPrice || 0,
+  totalCount: getLSCardData().totalCount || 0,
 };
 
 export const cartSlice = createSlice({
