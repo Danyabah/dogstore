@@ -69,6 +69,8 @@ export default function Home() {
             {location.pathname !== "/cart" && (
               <Search search={search} setSearch={setSearch} />
             )}
+          </div>
+          <div className="cart__right">
             {location.pathname !== "/cart" && (
               <div className="header__cart">
                 <Link to="/cart" className="button button--cart">
@@ -107,12 +109,12 @@ export default function Home() {
                 </Link>
               </div>
             )}
+            <Link to={"userinfo"}>
+              <div className="user__logo">
+                <img src={logo} alt="" />
+              </div>
+            </Link>
           </div>
-          <Link to={"userinfo"}>
-            <div className="user__logo">
-              <img src={logo} alt="" />
-            </div>
-          </Link>
         </div>
       </div>
       <div className="container">
