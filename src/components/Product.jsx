@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem, selectCurrentItem } from "../redux/slices/cartReducer";
 import Add from "./svg/Add";
+import { Link } from "react-router-dom";
 
 export default function Product({
   _id,
@@ -21,7 +22,9 @@ export default function Product({
   }
   return (
     <div className="product-block">
-      <img className="product-block__image" src={pictures} alt="Pizza" />
+      <Link to={`/product/${_id}`}>
+        <img className="product-block__image" src={pictures} alt="Pizza" />
+      </Link>
       <h4 className="product-block__title">{name}</h4>
       <div className="product-block__selector">
         <ul>
