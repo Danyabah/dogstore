@@ -14,13 +14,12 @@ export default function SignUp() {
     group: "",
     password: "",
   };
-  const useSignupMutation = () => {
-    return useMutation((formPayload) => {
-      return axios.post("https://api.react-learning.ru/signup", formPayload);
-    });
-  };
 
-  const { mutate } = useSignupMutation();
+  const { mutate } = useMutation({
+    mutationFn: (formPayload) => {
+      return axios.post("https://api.react-learning.ru/signup", formPayload);
+    },
+  });
 
   const signUpSchema = Yup.object().shape({
     name: Yup.string()
@@ -40,20 +39,22 @@ export default function SignUp() {
       .min(6, "Пароль слишком короткий"),
   });
 
+  const onSubmit = (values) => {
+    mutate(values, {
+      onSuccess: (response) => {
+        navigate("/login");
+      },
+      onError: (response) => {
+        alert("Произошла ошибка");
+      },
+    });
+  };
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={signUpSchema}
-      onSubmit={(values) => {
-        mutate(values, {
-          onSuccess: (response) => {
-            navigate("/login");
-          },
-          onError: (response) => {
-            alert("Произошла ошибка");
-          },
-        });
-      }}
+      onSubmit={onSubmit}
     >
       {(formik) => {
         const { errors, touched, isValid, dirty } = formik;

@@ -714,3 +714,18 @@ p {
     font-weight: bold;
   }
 }
+.product-block {
+  position: relative;
+  .btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 25px;
+    cursor: pointer;
+  }
+  .btn-d {
+    i {
+      color: red;
+    }
+  }
+}

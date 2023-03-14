@@ -1,11 +1,13 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { clearToken } from "../redux/slices/userReducer";
 export default function UserInfo() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const token = useSelector((state) => state.user.token);
+
   const { data: currentUser } = useQuery({
     queryKey: ["userInfo"],
     queryFn: async () => {
@@ -16,7 +18,7 @@ export default function UserInfo() {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem("token"),
+            Authorization: "Bearer " + token,
           },
         }
       );
