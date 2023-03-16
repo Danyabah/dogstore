@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
@@ -13,29 +13,16 @@ import {
   selectCurrentLikeItem,
 } from "../redux/slices/likeReducer";
 import Review from "./Review";
+import { errorAlert } from "../utils/errorAlert";
 
 export default function FullProduct() {
   const navigate = useNavigate();
   const { id } = useParams();
   const currentLike = useSelector(selectCurrentLikeItem(id));
-  const [like, setLike] = useState(currentLike ? true : false);
+
   const token = useSelector((state) => state.user.token);
   const dispatch = useDispatch();
   const currentItem = useSelector(selectCurrentItem(id));
-
-  function handleAddItem() {
-    dispatch(addItem(data));
-  }
-
-  function handleLike() {
-    dispatch(likeItem(data));
-    setLike(true);
-  }
-
-  function handleDislike() {
-    dispatch(dislikeItem(data));
-    setLike(false);
-  }
 
   const getProduct = async () => {
     const res = await fetch(`https://api.react-learning.ru/products/${id}`, {
@@ -56,7 +43,7 @@ export default function FullProduct() {
   });
 
   if (isError) {
-    alert("Пицца не найдена");
+    errorAlert("Продукт не найден");
     navigate("/");
   }
 
@@ -86,19 +73,22 @@ export default function FullProduct() {
           </div>
           <div
             className="button button--outline button--add"
-            onClick={handleAddItem}
+            onClick={() => dispatch(addItem(data))}
           >
             <Add />
             <span>В корзину</span>
             {currentItem && <i>{currentItem.count}</i>}
           </div>
-          {like ? (
-            <div className="btn btn-d" onClick={handleDislike}>
+          {currentLike ? (
+            <div
+              className="btn btn-d"
+              onClick={() => dispatch(dislikeItem(data))}
+            >
               <span>Убрать из избранного </span>
               <i className="uil uil-heart"></i>
             </div>
           ) : (
-            <div className="btn" onClick={handleLike}>
+            <div className="btn" onClick={() => dispatch(likeItem(data))}>
               <span>Добавить в избранное </span>
               <i className="uil uil-heart"></i>
             </div>

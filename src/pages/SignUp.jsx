@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import { errorAlert } from "../utils/errorAlert";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ export default function SignUp() {
         navigate("/login");
       },
       onError: (response) => {
-        alert("Произошла ошибка");
+        errorAlert("Произошла ошибка");
       },
     });
   };

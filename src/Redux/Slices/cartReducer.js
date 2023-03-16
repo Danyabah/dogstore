@@ -54,13 +54,10 @@ export const cartSlice = createSlice({
   },
 });
 
-// if (currentItem && currentItem.count < currentItem.stock) {
-//     currentItem.count++;
-//   } else if (!currentItem) {
-//     state.items.push({ ...action.payload, count: 1 });
-//   }
 export const selectCurrentItem = (id) => (state) =>
   state.cart.items.find((obj) => obj._id === id);
+
+export const selectAllIds = (state) => state.cart.items.map((item) => item._id);
 
 export const { addItem, decrement, deleteItem, clearCart } = cartSlice.actions;
 

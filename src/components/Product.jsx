@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem, selectCurrentItem } from "../redux/slices/cartReducer";
 import Add from "./svg/Add";
@@ -22,30 +22,15 @@ export default function Product({
   const dispatch = useDispatch();
   const currentItem = useSelector(selectCurrentItem(_id));
   const currentLike = useSelector(selectCurrentLikeItem(_id));
-  const [like, setLike] = useState(currentLike ? true : false);
-
-  function handleAddItem() {
-    dispatch(addItem(obj));
-  }
-
-  function handleLike() {
-    dispatch(likeItem(obj));
-    setLike(true);
-  }
-
-  function handleDislike() {
-    dispatch(dislikeItem(obj));
-    setLike(false);
-  }
 
   return (
     <div className="product-block">
-      {like ? (
-        <div className="btn btn-d" onClick={handleDislike}>
+      {currentLike ? (
+        <div className="btn btn-d" onClick={() => dispatch(dislikeItem(obj))}>
           <i className="uil uil-heart"></i>
         </div>
       ) : (
-        <div className="btn" onClick={handleLike}>
+        <div className="btn" onClick={() => dispatch(likeItem(obj))}>
           <i className="uil uil-heart"></i>
         </div>
       )}
@@ -65,7 +50,7 @@ export default function Product({
         <div className="product-block__price">{price} ₽</div>
         <button
           className="button button--outline button--add"
-          onClick={handleAddItem}
+          onClick={() => dispatch(addItem(obj))}
           disabled={currentItem?.count === stock}
         >
           <Add />
