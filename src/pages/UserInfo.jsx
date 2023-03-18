@@ -29,7 +29,7 @@ export default function UserInfo() {
   });
 
   function leave() {
-    localStorage.removeItem("token");
+    localStorage.removeItem("reduxState");
     dispatch(clearToken());
     navigate("/register");
   }
