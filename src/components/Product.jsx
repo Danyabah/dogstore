@@ -18,6 +18,7 @@ export default function Product({ obj }) {
   const currentLike = useSelector(selectCurrentLikeItem(obj._id));
   const location = useLocation();
   const navigate = useNavigate();
+
   const token = useSelector((state) => state.user.token);
 
   function handleEdit() {
@@ -39,6 +40,7 @@ export default function Product({ obj }) {
                 Authorization: "Bearer " + token,
               },
             });
+            navigate("/");
           },
         },
         {
