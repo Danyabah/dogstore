@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# ИНТЕРНЕТ МАГАЗИН С АВТОРИЗАЦИЕЙ И ВОЗМОЖНОСТЬЮ ДОБАВЛЯТЬ/РЕДАКТИРОВАТЬ СВОИ ПРОДУКТЫ
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
